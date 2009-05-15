@@ -74,7 +74,6 @@ end
 }
 # Validates Non Offensiveness Of
 plugin 'validates_non_offensiveness_of', :git => "git://github.com/cauta/validates_non_offensiveness_of.git"
-run "cp ~/Desktop/cauta.ro/offensive_words.yml vendor/plugins/validates_non_offensiveness_of/lib/offensive_words.yml"
 # Acts As State Machine
 plugin 'acts_as_state_machine', :svn => "http://elitists.textdriven.com/svn/plugins/acts_as_state_machine/trunk"
 # Acts As Rateable
