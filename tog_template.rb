@@ -38,6 +38,9 @@ db/*.sqlite3
 END
 run "touch tmp/.gitignore log/.gitignore vendor/.gitignore"
 
+# Reload plugins
+run "sed -i config/environment.rb -e \"s/Rails::Initializer.run do |config|/Rails::Initializer.run do |config|\\n\\tconfig.reload_plugins = true if RAILS_ENV == 'development'/\""
+
 # Install gems
 run "sed -i config/environment.rb -e \"s/Rails::Initializer.run do |config|/require 'desert'\\nRails::Initializer.run do |config|/\""
 gem 'desert', :version => '0.5', :lib => 'desert'
