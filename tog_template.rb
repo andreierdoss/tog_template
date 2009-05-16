@@ -145,6 +145,9 @@ end
 # Tog rake tasks
 run "echo \"require 'tasks/tog'\" >> Rakefile"
 
+# Migrate
+rake "db:migrate"
+
 if yes?("Install Tog Conversatio?")
   gem "RedCloth", :lib => "redcloth", :source => "http://code.whytheluckystiff.net"
   rake "gems:install", :sudo => true
@@ -162,11 +165,14 @@ if yes?("Install Tog Conversatio?")
       end
   end
   }
+  rake "db:migrate"
+  rake "thinking_sphinx:index"
 end
 
 if yes?("Install Tog Picto?")
   plugin 'acts_as_list', :git => "git://github.com/rails/acts_as_list.git"
   plugin 'tog_picto', :git => "git://github.com/cauta/tog_picto.git"
+  route "map.routes_from_plugin 'tog_picto'"
   file "db/migrate/" + Time.now.strftime("%Y%m%d%H%M%S") + "_install_tog_picto.rb",
   %q{class InstallTogPicto < ActiveRecord::Migration
     def self.up
@@ -178,11 +184,10 @@ if yes?("Install Tog Picto?")
     end
   end
   }
-  route "map.routes_from_plugin 'tog_picto'"
+  rake "db:migrate"
+  rake "thinking_sphinx:index"
 end
 
-rake "db:migrate"
-rake "thinking_sphinx:index"
 rake "tog:plugins:copy_resources"
 
 if yes?("Run tog's tests?")
